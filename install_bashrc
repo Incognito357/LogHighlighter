@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#append to the .bashrc if ~/.log does not exist (presumably the first time this script runs)
+if [ ! -f $HOME/.log ]; then
+	echo "Appeding .bashrc file..."
+	cat <<EOF >> $HOME/.bashrc
+
+if [ -f $HOME/.log ]; then
+	. $HOME/.log
+fi
+EOF
+fi
+
+#install the file
+echo "Installing log..."
+cp log ~/.log
+
+echo "Installation complete."
+echo -e "\033[31mDon't forget to run \033[33m'source ~/.bashrc'\033[31m to complete the installation!"
