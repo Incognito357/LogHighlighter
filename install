@@ -1,2 +1,2 @@
 #!/bin/bash
-cp log /bin/log
+cat log | sed 's/.*#BASHRC/#&/' > /bin/log
