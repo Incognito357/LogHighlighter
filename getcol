@@ -1,0 +1,96 @@
+#!/bin/bash
+function getcol(){
+if [ $# == 3 ]; then
+	echo "$((($1 % 6)* 36 + ($2 % 6) * 6 + ($3 % 6) + 16))"
+elif [ $# == 2 ]; then
+	v="$((($2 % 7) + 1))"
+
+	case "$1" in
+		r|R)	if [[ $v == 4 ]]; then
+				v=1
+			elif [[ $v == 7 ]]; then
+				v=9
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol $v 0 0)
+			fi
+			;;
+		g|G)	if [[ $v == 4 ]]; then
+				v=2
+			elif [[ $v == 7 ]]; then
+				v=10
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol 0 $v 0)
+			fi
+			;;
+		b|B)	if [[ $v == 4 ]]; then
+				v=4
+			elif [[ $v == 7 ]]; then
+				v=12
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol 0 0 $v)
+			fi
+			;;
+		y|Y)	if [[ $v == 4 ]]; then
+				v=3
+			elif [[ $v == 7 ]]; then
+				v=11
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol $v $v 0)
+			fi
+			;;
+		c|C)	if [[ $v == 4 ]]; then
+				v=6
+			elif [[ $v == 7 ]]; then
+				v=14
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol 0 $v $v)
+			fi
+			;;
+		m|M)	if [[ $v == 4 ]]; then
+				v=5
+			elif [[ $v == 7 ]]; then
+				v=13
+			else
+				if [[ $v > 4 ]]; then
+					v=$((v - 1))
+				fi
+				v=$(getcol $v 0 $v)
+			fi
+			;;
+		w|W|x|X) v="$(($2 % 28))"
+			if [[ $v == 7 ]]; then
+				v=8
+			elif [[ $v == 21 ]]; then
+				v=7
+			elif [[ $v == 27 ]]; then
+				v=15
+			else
+				if [[ $v > 21 ]]; then
+					v=$((v - 2))
+				elif [[ $v > 7 ]]; then
+					v=$((v - 1))
+				fi
+				v=$((v + 231))
+			fi
+			;;
+		*)	v=0
+			;;
+	esac
+	echo "$v"
+fi
+}
