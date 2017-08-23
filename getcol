@@ -3,7 +3,11 @@ function getcol(){
 if [ $# == 3 ]; then
 	echo "$((($1 % 6)* 36 + ($2 % 6) * 6 + ($3 % 6) + 16))"
 elif [ $# == 2 ]; then
-	v="$((($2 % 7) + 1))"
+	if [ $2 == 0 ]; then
+		echo "0"
+		return
+	fi
+	v="$((($2 % 8)))"
 
 	case "$1" in
 		r|R)	if [[ $v == 4 ]]; then
@@ -11,7 +15,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=9
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol $v 0 0)
@@ -22,7 +26,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=10
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol 0 $v 0)
@@ -33,7 +37,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=12
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol 0 0 $v)
@@ -44,7 +48,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=11
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol $v $v 0)
@@ -55,7 +59,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=14
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol 0 $v $v)
@@ -66,7 +70,7 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 7 ]]; then
 				v=13
 			else
-				if [[ $v > 4 ]]; then
+				if [[ $v -gt 4 ]]; then
 					v=$((v - 1))
 				fi
 				v=$(getcol $v 0 $v)
@@ -80,9 +84,9 @@ elif [ $# == 2 ]; then
 			elif [[ $v == 27 ]]; then
 				v=15
 			else
-				if [[ $v > 21 ]]; then
+				if [[ $v -gt 21 ]]; then
 					v=$((v - 2))
-				elif [[ $v > 7 ]]; then
+				elif [[ $v -gt 7 ]]; then
 					v=$((v - 1))
 				fi
 				v=$((v + 231))
@@ -94,3 +98,5 @@ elif [ $# == 2 ]; then
 	echo "$v"
 fi
 }
+
+getcol $*
