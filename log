@@ -1,5 +1,41 @@
 #!/bin/bash
 function log {		#BASHRC
+
+function index_of(){
+	local e match="$1"
+	shift
+	local i=0
+	for e; do
+		if [[ "$e" == "$match" ]]; then
+			return $i;
+		else
+			((i++))
+		fi
+	done
+	return -1
+}
+
+i=0
+function read_config(){
+	while read line; do
+		if [[ "$line" =~ ^[^#*= ]]; then
+			n=${line%% =*}
+			k=$(index_of $i $name)
+			if [[ $k -ge 0 ]]; then
+				name[k]=$n
+				value[k]=${line#*= }
+			else
+				name[i]=$n
+				value[i]=${line#*= }
+				((i++))
+			fi
+		fi
+	done < $1
+}
+
+read_config ~/.log.default.config
+read_config ~/log.config
+
 awkcmd='BEGIN {n="37"}
 	function color(str, a, b, m){
 		na="38;5;242";
