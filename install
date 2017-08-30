@@ -1,2 +1,4 @@
 #!/bin/bash
 cat log | sed 's/.*#BASHRC/#&/' > /bin/log
+cp log.default.config ~/.log.default.config
+cp log.config ~/log.config
