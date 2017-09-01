@@ -118,7 +118,11 @@ if [[ "$#" -gt "0" ]]; then
 
 	if [[ ${#files[@]} -gt 0 ]]; then
 		if [[ ${#files[@]} -eq 1 ]]; then
+			tmp="$n"
 			n=$(tac "${files[0]}" | grep "$pat" -m$n -n | tac | head -1 | cut -d : -f 1)
+			if [[ -z "$n" ]]; then
+				n="$tmp"
+			fi
 		fi
 		if [[ -n "$search" ]]; then
 			tail -n $n $f "${files[@]}" | awk -v search="$search" "$awkcmd"
