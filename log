@@ -36,7 +36,7 @@ if [[ "$#" -gt "0" ]]; then
 	n="30"
 	f="-f"
 	search=""
-	pat="INFO\|WARN\|DEBUG\|ERROR\|TRACE\|FATAL"
+	pat="INFO|WARN|DEBUG|ERROR|TRACE|FATAL"
 	files=()
 
 	while [[ "$#" -gt "0" ]]; do
@@ -83,7 +83,7 @@ if [[ "$#" -gt "0" ]]; then
 	if [[ ${#files[@]} -gt 0 ]]; then
 		if [[ ${#files[@]} -eq 1 ]]; then
 			tmp="$n"
-			n=$(tac "${files[0]}" | grep "$pat" -m$n -n | tac | head -1 | cut -d : -f 1)
+			n=$(tac "${files[0]}" | grep -E "$pat" -m$n -n | tac | head -1 | cut -d : -f 1)
 			if [[ -z "$n" ]]; then
 				n="$tmp"
 			fi
