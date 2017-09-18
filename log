@@ -22,14 +22,14 @@ awkcmd='BEGIN {n="37"}
 		if (search != "") out=gensub("("search")", "\033[7m\\1\033[27m", "g");
 		else out=$0;
 	}
-	!/INFO|ERROR|WARN|DEBUG|TRACE|FATAL|^==>.*<==$/ { print "\033[" n "m" out }
-	match(out, /(\[?INFO *?\]?)/, m)  { color(out, "36", "38;5;30", m[1]); }
-	match(out, /(\[?WARN *?\]?)/, m)  { color(out, "93", "38;5;100", m[1]); }
-	match(out, /(\[?ERROR *?\]?)/, m) { color(out, "91", "38;5;124", m[1]); }
-	match(out, /(\[?DEBUG *?\]?)/, m) { color(out, "92", "38;5;28", m[1]); }
-	match(out, /(\[?TRACE *?\]?)/, m) { color(out, "95", "38;5;90", m[1]); }
-	match(out, /(\[?FATAL *?\]?)/, m) { color(out, "4;91", "24;91", m[1]); }
-	match(out, /^==>.*<==$/){ print "\033[95m" out }'
+	!/INFO|ERROR|WARN|DEBUG|TRACE|FATAL|^==>.*<==$/ { print "\033[" n "m" out; next }
+	match(out, /(\[?FATAL *?\]?)/, m) { color(out, "4;91", "24;91", m[1]); next }
+	match(out, /(\[?ERROR *?\]?)/, m) { color(out, "91", "38;5;124", m[1]); next }
+	match(out, /(\[?TRACE *?\]?)/, m) { color(out, "95", "38;5;90", m[1]); next }
+	match(out, /(\[?DEBUG *?\]?)/, m) { color(out, "92", "38;5;28", m[1]); next }
+	match(out, /(\[?WARN *?\]?)/, m)  { color(out, "93", "38;5;100", m[1]); next }
+	match(out, /(\[?INFO *?\]?)/, m)  { color(out, "36", "38;5;30", m[1]); next }
+	match(out, /^==>.*<==$/){ print "\033[95m" out; next }'
 
 version="1.0"
 if [[ "$#" -gt "0" ]]; then
