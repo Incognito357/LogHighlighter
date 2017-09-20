@@ -29,7 +29,8 @@ awkcmd='BEGIN {n="37"}
 	match(out, /(\[?DEBUG *?\]?)/, m) { color(out, "92", "38;5;28", m[1]); next }
 	match(out, /(\[?WARN *?\]?)/, m)  { color(out, "93", "38;5;100", m[1]); next }
 	match(out, /(\[?INFO *?\]?)/, m)  { color(out, "36", "38;5;30", m[1]); next }
-	match(out, /^==>.*<==$/){ print "\033[95m" out; next }'
+	match(out, /^==>.*<==$/){ print "\033[95m" out; next }
+	END { printf "\033[0m" }'
 
 version="1.0"
 if [[ "$#" -gt "0" ]]; then
